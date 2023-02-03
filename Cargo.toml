@@ -1,0 +1,33 @@
+[package]
+name = "dico-gui"
+version = "0.1.0"
+authors = ["Sébastien GRAVIER <sebastien@gravier.pro>"]
+description = "Graphspell gui"
+license = "GPL 3"
+repository = "offline"
+edition = "2021"
+build = "build.rs"
+
+[package.metadata.winres]
+LegalCopyright = "Sébastien Gravier"
+
+[[bin]]
+name = "dico-gui"
+path = "./src/main.rs"
+
+[features]
+default = []
+protocol = []
+
+[dependencies]
+wry = { version = "0.26.0", features = [
+    "file-drop",
+    #"objc-exception",
+    "protocol",
+] }
+
+[target.'cfg(all(any(windows, unix), any(target_arch = "x86_64", target_arch = "wasm32"), not(target_env = "musl")))'.dependencies]
+mimalloc = { git = "https://github.com/purpleprotocol/mimalloc_rust.git", branch = "master" }
+
+[build-dependencies]
+winres = "0.1"
